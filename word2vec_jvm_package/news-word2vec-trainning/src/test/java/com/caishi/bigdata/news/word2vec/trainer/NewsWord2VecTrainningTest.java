@@ -154,6 +154,23 @@ public class NewsWord2VecTrainningTest {
     @Test
     public void testComputeTextConsineScoreByWordVec_02(){
 
+        System.out.println("-----------testComputeTextConsineScoreByWordVec_02- tags key words word2vec---------------------");
+        int vectorSize = 200;
+        String words="生活  短信 信息 主将 口号 方式 幼儿园 经典 旧情 马上拉 时期";
+
+        String word1="家居 家具 经典";
+        String word2="家居 北欧 经典";
+
+        double cosineScore1_words_word1 = Word2VecUtils.computeCosineScore(Word2VecUtils.buildWordsVector(words.split(" "), vectorSize, w2vModel), Word2VecUtils.buildWordsVector(word1.split(" "), vectorSize, w2vModel));
+        System.out.println("cosineScore1_words_word1:" + cosineScore1_words_word1);//cosineScore1_words_word1:0.09438144233098633
+        double cosineScore1_words_word2 = Word2VecUtils.computeCosineScore(Word2VecUtils.buildWordsVector(words.split(" "), vectorSize, w2vModel), Word2VecUtils.buildWordsVector(word2.split(" "), vectorSize, w2vModel));
+        System.out.println("cosineScore1_words_word2:" + cosineScore1_words_word2);//cosineScore1_words_word2:0.10594416263179456
+    }
+
+    @Test
+    public void testComputeTextConsineScoreByWordVec_03(){
+        System.out.println("-----------testComputeTextConsineScoreByWordVec_02- ansj key words word2vec---------------------");
+
         int vectorSize = 200;
         String words="生活 唔 撩 前任 短信 时 回 能比 分手 人心 塞 分手 前任 纠缠 说 纠缠 太过分 明明 分手 发来 短信 机智 唔 前任 发来 说 圈 主将 话题 选 获 赞 唔 送 红包 先 拒绝 派 发 信息 信不信 怼 死 打着 口号 经典 拒 怼 收藏 好哟 分手 闹 开心 杀人 心 旧情 复燃 美好 幼儿园 感天动地 新 另一半 哈哈哈 抱歉 太 理 分手时 当机立断 马上拉 黑 根本就是 凄凉 经验 评论 区 ";
 
@@ -165,6 +182,7 @@ public class NewsWord2VecTrainningTest {
         double cosineScore1_words_word2 = Word2VecUtils.computeCosineScore(Word2VecUtils.buildWordsVector(words.split(" "), vectorSize, w2vModel), Word2VecUtils.buildWordsVector(word2.split(" "), vectorSize, w2vModel));
         System.out.println("cosineScore1_words_word2:" + cosineScore1_words_word2);//cosineScore1_words_word2:0.1022375129223416
     }
+
 
     private static void printWordsVector(double[] wordsVector_1) {
         StringBuffer wordsBuffer = new StringBuffer();
