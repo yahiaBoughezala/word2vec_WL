@@ -37,14 +37,16 @@ public class Word2VecUtils {
         int totalWordCount = 0;
         for (String word : words) {
             try {
-                Vector wordVector = w2vModel.transform(word);
-                double[] wordVectorArray = wordVector.toArray();
-                for (int i = 0; i < wordVectorArray.length; i++) {
-                    vectors[i] += wordVectorArray[i];
+                if(word.length()>=2){
+                    Vector wordVector = w2vModel.transform(word);
+                    double[] wordVectorArray = wordVector.toArray();
+                    for (int i = 0; i < wordVectorArray.length; i++) {
+                        vectors[i] += wordVectorArray[i];
+                    }
+                    totalWordCount++;
                 }
-                totalWordCount++;
             } catch (Exception e) {
-                LOGGER.error("NOT Found %s Vector when buildWordsVector", word);
+                LOGGER.warn("NOT Found ["+word+"] in word2Vec   when buildWordsVector");
             }
         }
         if (0 != totalWordCount) {
