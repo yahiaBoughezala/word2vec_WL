@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Chinese-sentiment-analysis/.idea/Chinese-sentiment-analysis.iml" filepath="$PROJECT_DIR$/../Chinese-sentiment-analysis/.idea/Chinese-sentiment-analysis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../XGBoost Demo/XGBoost_Python_Demo/.idea/XGBoost_XX.iml" filepath="$PROJECT_DIR$/../../XGBoost Demo/XGBoost_Python_Demo/.idea/XGBoost_XX.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/gensim_word2vec.iml" filepath="$PROJECT_DIR$/.idea/gensim_word2vec.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../gensim_word2vec_Wikipedia/.idea/gensim_word2vec_Wikipedia.iml" filepath="$PROJECT_DIR$/../gensim_word2vec_Wikipedia/.idea/gensim_word2vec_Wikipedia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../word2vec-sentiments/.idea/word2vec-sentiments.iml" filepath="$PROJECT_DIR$/../word2vec-sentiments/.idea/word2vec-sentiments.iml" />
+    </modules>
+  </component>
+</project>

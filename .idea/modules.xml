@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/word2vec_jvm_package/common-word2vec/common-word2vec.iml" filepath="$PROJECT_DIR$/word2vec_jvm_package/common-word2vec/common-word2vec.iml" />
+      <module fileurl="file://$PROJECT_DIR$/word2vec_jvm_package/news-word2vec-trainning/news-word2vec-trainning.iml" filepath="$PROJECT_DIR$/word2vec_jvm_package/news-word2vec-trainning/news-word2vec-trainning.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/word2vec-wuli.iml" filepath="$PROJECT_DIR$/.idea/word2vec-wuli.iml" />
+    </modules>
+  </component>
+</project>
