@@ -16,6 +16,28 @@ public class Word2VecUtils {
     public static final transient Logger LOGGER = LoggerFactory.getLogger(Word2VecUtils.class);
 
     /**
+     * 通过Word2Vec 模型构建词向量的字符串表示
+     * @param wordsVector
+     * @return
+     */
+    public static String getStringWithWord2Vec(double[] wordsVector) {
+        if (null == wordsVector || wordsVector.length == 0) {
+            return null;
+        }
+        StringBuffer wordsBuffer = new StringBuffer("");
+        int count = 0;
+        int wordsVectorLength = wordsVector.length;
+        for (int i = 0; i < wordsVectorLength; i++) {
+            wordsBuffer.append(wordsVector[i]);
+            count += 1;
+            if (count != wordsVectorLength) {
+                wordsBuffer.append(",");
+            }
+        }
+        return wordsBuffer.toString().trim();
+    }
+
+    /**
      * 通过Word2Vec 模型构建词向量
      *
      * @param words      文章分词列表，空格分割。例如：我 爱 北京 天安门
@@ -37,7 +59,7 @@ public class Word2VecUtils {
         int totalWordCount = 0;
         for (String word : words) {
             try {
-                if(word.length()>=2){
+                if (word.length() >= 2) {
                     Vector wordVector = w2vModel.transform(word);
                     double[] wordVectorArray = wordVector.toArray();
                     for (int i = 0; i < wordVectorArray.length; i++) {
@@ -46,7 +68,7 @@ public class Word2VecUtils {
                     totalWordCount++;
                 }
             } catch (Exception e) {
-                LOGGER.warn("NOT Found ["+word+"] in word2Vec   when buildWordsVector");
+                LOGGER.warn("NOT Found [" + word + "] in word2Vec   when buildWordsVector");
             }
         }
         if (0 != totalWordCount) {
