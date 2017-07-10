@@ -1,1 +1,1 @@
-# word2vec-wuli
+# word2vec-WL
