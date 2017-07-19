@@ -5,8 +5,8 @@
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/scala" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -14,7 +14,7 @@
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.10.5" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-compiler:2.10.5" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-reflect:2.10.5" level="project" />
-    <orderEntry type="module" module-name="common-word2vec" />
+    <orderEntry type="library" name="Maven: com.caishi.bigdata:common-word2vec:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.apache.spark:spark-core_2.10:1.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.avro:avro-mapred:hadoop2:1.7.7" level="project" />
     <orderEntry type="library" name="Maven: org.apache.avro:avro-ipc:1.7.7" level="project" />

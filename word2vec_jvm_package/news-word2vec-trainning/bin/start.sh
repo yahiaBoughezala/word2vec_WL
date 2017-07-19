@@ -26,10 +26,10 @@ done
 [ ! -d ${server_log_home} ] && echo "server_log_home is not a directory!!!" && exit 255
 
 SPARH_HOME=/home/hadoop/caishi/local/spark-1.6.0
-nohup /home/hadoop/caishi/local/spark-1.6.0/bin/spark-submit \
+/home/hadoop/caishi/local/spark-1.6.0/bin/spark-submit \
     --class com.caishi.bigdata.news.word2vec.trainer.NewsWord2VecTrainning \
     --jars $classpath \
     --properties-file /home/hadoop/apps/spark-NewsWord2Vec/conf/spark.conf \
     /home/hadoop/apps/spark-NewsWord2Vec/news-word2vec-trainning-1.0.jar \
-    hdfs://10.4.1.1:9000 spark-NewsWord2VecTrainning /news/w2v/sampling /news/W2V/News_W2V_Model \
-    200 100 5 24 5 >./logs/NewsWord2Vec.info 2>&1 &
+    hdfs://10.4.1.4:9000 spark-NewsWord2VecTrainning  /news/w2v/sampling/*/part-r-*  /news/W2V/News_W2V_Model \
+    200 100 5 24 5 >/home/hadoop/apps/spark-NewsWord2Vec/logs/NewsWord2Vec.info 2>&1
