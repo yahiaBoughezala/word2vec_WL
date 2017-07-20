@@ -12,7 +12,8 @@ JDK的版本： 1.7+
 一般情况下，我们可以直接获取新闻的文章内容title+content，然后通过中文分词器完成分词。这里我们使用Ansj分词。
 可以参考：com.caishi.bigdata.categorize.textseg.common.main.MultiDirectoryWord2VecSampling 中案例，主要通过Ansj 的分词提取
 
-### 2.1 输入数据格式word2vec_jvm_package/Chinese-text-segmentation/data/20170719/pcat-470000/cat-470100/part-r-00000
+### 2.1 输入数据格式
+word2vec_jvm_package/Chinese-text-segmentation/data/20170719/pcat-470000/cat-470100/part-r-00000
 ```
 {
     "id": "1700acb676ee02cb",
