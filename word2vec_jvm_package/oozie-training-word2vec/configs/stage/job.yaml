@@ -1,0 +1,10 @@
+--- !OozieJob
+app: training-word2vec
+type: coordinator
+dependencyLibs: ~
+hdfsPath: oozie/apps
+name: training-word2vec
+schedules:
+  - coordinator.xml
+  - job.properties
+  - workflow.xml

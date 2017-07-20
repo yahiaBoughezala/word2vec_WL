@@ -1,0 +1,7 @@
+pykafka==2.3.1
+pymongo==3.2.2
+PyYAML==3.11
+redis==2.10.5
+redis-shard==0.3.3
+requests==2.4.3
+six==1.9.0

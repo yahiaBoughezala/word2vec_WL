@@ -25,15 +25,16 @@ def copytree(src, dst, symlinks=False, ignore=None):
 
 if __name__ == '__main__':
     # validate input parameter
-    if len(sys.argv[1:])==2:
+    if len(sys.argv[1:])==3:
         print('Starting build  release for %s name %s verson' % (sys.argv[1],sys.argv[2]))
     else:
-        print("Usage : build.sh {textseg-common|} {version} .eg: the parameter  Chinese-text-segmentation 1.0")
+        print("Usage : build.sh  {app_prefix} {version}  {env}  .eg: the parameter  oozie-training-word2vec 0.0.1 prod")
         sys.exit()
 # validate input parameter type
 TARGET_NAME= sys.argv[1]
 DEV = os.getcwd()
 VERSION = sys.argv[2]
+ENV=sys.argv[3]
 DISTRIB = DEV + '/build'
 
 # =============================================
@@ -50,31 +51,19 @@ print("The Final DISTRIB is: " + DISTRIB)
 # =============================================
 # create distrib lib dir
 # =============================================
-os.mkdir(DISTRIB + '/lib')
+os.mkdir(DISTRIB + '/configs')
 os.mkdir(DISTRIB + "/bin")
-os.mkdir(DISTRIB + '/library')
-os.mkdir(DISTRIB + '/stopwords')
-
 # =============================================
 # scripts
 # ============================================
 server = DEV
 copytree(server + "/bin/", DISTRIB+"/bin/")
-copytree(server + '/library/', DISTRIB + '/library/')
-copytree(server + '/stopwords/', DISTRIB + '/stopwords/')
+copytree(server+'/configs/'+ ENV,DISTRIB +  '/configs/')
 
 os.system('mvn clean')
 os.system('mvn package install -Dmaven.test.skip=true')
 
 print(server + '/target/'+TARGET_NAME+'-' + VERSION + '-SNAPSHOT.jar')
-print(DISTRIB + '/lib/'+TARGET_NAME+'-' + VERSION + '.jar')
-copy(server + '/target/'+TARGET_NAME+'-1.0-SNAPSHOT.jar', DISTRIB + '/lib/'+TARGET_NAME+'-' + VERSION + '.jar')
-
-# =============================================
-# lib dependency
-# =============================================
-os.system('mvn dependency:copy-dependencies')
-copytree(server + '/target/dependency', DISTRIB + '/lib')
 
 # =============================================
 # make tar.gz
@@ -82,7 +71,5 @@ copytree(server + '/target/dependency', DISTRIB + '/lib')
 os.chdir(DISTRIB)
 tar = tarfile.open(''+TARGET_NAME+'-' + VERSION + '.tar.gz', 'w:gz')
 tar.add("bin")
-tar.add('lib');
-tar.add('library')
-tar.add("stopwords")
+tar.add('configs');
 tar.close()

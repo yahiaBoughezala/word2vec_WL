@@ -44,7 +44,10 @@
         </pluginManagement>
     </build>
     <modules>
+        <module>capricorn-app-scheduler</module>
+        <module>Chinese-text-segmentation</module>
         <module>common-word2vec</module>
         <module>news-word2vec-trainning</module>
+        <module>oozie-training-word2vec</module>
     </modules>
 </project>

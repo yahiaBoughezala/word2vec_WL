@@ -1,0 +1,54 @@
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="training-word2vec">
+
+    <start to="productWord2VecData"/>
+    <!-- step 1: product word2vec datasource -->
+    <action name="productWord2VecData">
+        <ssh xmlns="uri:oozie:ssh-action:0.1">
+            <host>${dataSourceExecutionHost}</host>
+            <command>sh</command>
+            <args>${dataSourceScriptFile}</args>
+            <args>${DATE}</args>
+        </ssh>
+        <ok to="samplingWord2Vec"/>
+        <error to="fail"/>
+    </action>
+    <!-- step 2: download Chinese Text Data -->
+    <action name="samplingWord2Vec">
+        <ssh xmlns="uri:oozie:ssh-action:0.1">
+            <host>${sampleExecutionHost}</host>
+            <command>sh</command>
+            <args>${samplingScriptFile}</args>
+            <args>${DATE}</args>
+        </ssh>
+        <ok to="doWord2VecModelTraining"/>
+        <error to="fail"/>
+    </action>
+
+    <!-- step 3 start model training -->
+    <action name='doWord2VecModelTraining'>
+        <ssh xmlns="uri:oozie:ssh-action:0.1">
+            <host>${trainingExecutionHost}</host>
+            <command>sh</command>
+            <args>${trainingScriptFile}</args>
+            <args>${DATE}</args>
+        </ssh>
+        <ok to="email"/>
+        <error to="fail"/>
+    </action>
+
+    <!--  email:notification on success -->
+    <action name="email">
+        <email xmlns="uri:oozie:email-action:0.1">
+            <to>fuli.shen@9icaishi.net</to>
+            <cc>fuli.shen@9icaishi.net</cc>
+            <subject>Info:Oozie workflow finished successfully</subject>
+            <body>word2vecModel training job finished successfully</body>
+        </email>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+    <kill name="fail">
+        <message>Workflow failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

@@ -11,33 +11,50 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 提取满足Word2Vector的样本数据
+ * 多目录方式对文本分词
  * Created by fuli.shen on 2017/6/27.
  */
-public class Word2VectorTextSegment {
-    static String srcPath = "data/newsContent.json";
-    static String dstPath = "data/word2vector_sampling.text";
-    public static final Logger logger = LoggerFactory.getLogger(Word2VectorTextSegment.class);
-
+public class MultiDirectoryWord2VecSampling {
+    public static final Logger LOGGER = LoggerFactory.getLogger(MultiDirectoryWord2VecSampling.class);
+    // data/20170628/     news/w2v/sampling/20170628/
+    static String srcPath = "data/20170719/";
+    static String dstPath = "news/w2v/sampling/20170719/";
+    static List<File> filelist = new LinkedList<>();
     public static void main(String[] args) {
         if (args.length != 2) {
-            logger.warn("Usage: java -jar Word2VectorTextSegment-1.0.jar com.caishi.textseg.common.main.Word2VectorTextSegment <srcPath><dstPath> ");
+            LOGGER.warn("Usage: java -jar multiDirectoryWord2VecSampling-1.0.jar com.caishi.textseg.common.main.MultiDirectoryWord2VecSampling <srcPath><dstPath> ");
             System.exit(1);
         }
         srcPath = args[0];
         dstPath = args[1];
+        getFileList(srcPath);
+        for (File file : filelist) {
+            String fileAbsolutePath = file.getAbsolutePath();
+            String subCategoryName = file.getParentFile().getName();
+            String mainCategoryName = file.getParentFile().getParentFile().getName();
+            SubMainChineseTokenizer(file, fileAbsolutePath, subCategoryName, mainCategoryName);
+        }
+    }
+
+    private static void SubMainChineseTokenizer(File file, String fileAbsolutePath, String subCategoryName, String mainCategoryName) {
         BufferedReader reader = null;
         BufferedWriter writer = null;
         String line = null;
         try {
-
-            reader = new BufferedReader(new FileReader(srcPath));
-            writer = new BufferedWriter(new FileWriter(dstPath));
-
+            reader = new BufferedReader(new FileReader(fileAbsolutePath));
+            String targetFileDirectoryPath = dstPath + mainCategoryName + "/" + subCategoryName + "/";
+            File targetFileDirectory = new File(targetFileDirectoryPath);
+            if (!targetFileDirectory.exists()) {
+                targetFileDirectory.mkdirs();
+            }
+            String fileName = targetFileDirectoryPath + file.getName();
+            LOGGER.info("Write Data FileName:" + fileName);
+            writer = new BufferedWriter(new FileWriter(fileName));
             while ((line = reader.readLine()) != null) {
                 StringBuffer wordsBuffer = new StringBuffer();
                 CategoryInfo categoryInfo = JSON.parseObject(line, CategoryInfo.class);
@@ -61,12 +78,27 @@ public class Word2VectorTextSegment {
                 writer.write(wordsBuffer.toString());
             }
         } catch (Exception e) {
-            logger.error("parse exception ,data:{},err:{} ", line, e);
+            LOGGER.error("parse exception ,data:{},err:{} ", line, e);
         } finally {
             close(reader, writer);
         }
     }
 
+    public static void getFileList(String strPath) {
+        File dir = new File(strPath);
+        File[] files = dir.listFiles();
+        if (files != null) {
+            for (int i = 0; i < files.length; i++) {
+                String fileName = files[i].getName();
+                if (files[i].isDirectory()) {
+                    getFileList(files[i].getAbsolutePath());
+                } else if (fileName.startsWith("part-r")) {
+                    String strFileName = files[i].getAbsolutePath();
+                    filelist.add(new File(strFileName));
+                }
+            }
+        }
+    }
     private static void close(BufferedReader reader, BufferedWriter writer) {
         if (null != writer) {
             try {

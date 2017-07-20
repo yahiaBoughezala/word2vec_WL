@@ -1,0 +1,4 @@
+
+class NewsType():
+
+    NEWS='NEWS'

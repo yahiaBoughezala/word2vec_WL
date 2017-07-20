@@ -1,0 +1,26 @@
+<coordinator-app name="training-word2vec" frequency="${coord:minutes(1440)}" start="${start}" end="${end}" timezone="GMT+0800"
+                 xmlns="uri:oozie:coordinator:0.2">
+    <action>
+        <workflow>
+            <app-path>${workflowAppUri}</app-path>
+            <configuration>
+                <property>
+                    <name>jobTracker</name>
+                    <value>${jobTracker}</value>
+                </property>
+                <property>
+                    <name>nameNode</name>
+                    <value>${nameNode}</value>
+                </property>
+                <property>
+                    <name>queueName</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>DATE</name>
+                    <value>${coord:formatTime(coord:dateOffset(coord:nominalTime(), -1, 'DAY'), 'yyyyMMdd')}</value>
+                </property>
+            </configuration>
+        </workflow>
+    </action>
+</coordinator-app>
