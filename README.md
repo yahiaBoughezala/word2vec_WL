@@ -1,1 +1,1 @@
-# word2vec-WL
+# News word2vec Model Train With Spark 
