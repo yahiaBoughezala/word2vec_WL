@@ -10,7 +10,7 @@ JDK的版本： 1.7+
 
 ## 2. 新闻原始数据分词
 一般情况下，我们可以直接获取新闻的文章内容title+content，然后通过中文分词器完成分词。这里我们使用Ansj分词。
-可以参考：com.caishi.bigdata.categorize.textseg.common.main.MultiDirectoryWord2VecSampling 中案例，主要通过Ansj 的分词提取
+可以参考：MultiDirectoryWord2VecSampling 中案例，主要通过Ansj 的分词提取
 
 ### 2.1 输入数据格式
 word2vec_jvm_package/Chinese-text-segmentation/data/20170719/pcat-470000/cat-470100/part-r-00000
@@ -59,9 +59,18 @@ val word2vec = new Word2Vec()
 // 3. 模型保存
 word2vecModel.save(sc, hdfsURL + newsW2VModelPath)
 
-其中： newsW2VSampling 是存储在HDFS上的样本数据，即上 2.2 中的结果
 ```
+其中： newsW2VSampling 是存储在HDFS上的样本数据，即上 2.2 中的结果。实际使用过程中： 我们需要执行\news-word2vec-trainning\build.py来生成包，然后考虑到linux下启动训练程序    
 
+```
+# 上传news-word2vec-trainning-1.0.tar.gz并解压
+[hadoop@master spark-NewsWord2Vec]$ ls
+bin  conf  lib  logs  metastore_db  news-word2vec-trainning-1.0.jar
+#启动训练程序
+bin/start.sh 
+
+其中： 训练数据大概5.8G，这里进行5次迭代。这10台Spark的集群上运行，运行仅1.2小时完成
+```
 ### 3.2 模型加载
 训练出模型后，我们需要实时性的预测一批新闻的word2vec ，根据具体业务需求可以做 关键词同义词提取和计算整个句子的词向量，进一步做文本的相似度比较。  
 这里我们使用JAVA 方法进行预测，具体代码（已经训练好的新闻模型： https://pan.baidu.com/s/1o7ZSjk2 ，详见后存储HDFS上就可以直接使用了）：  
