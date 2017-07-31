@@ -1,6 +1,8 @@
 package com.caishi.bigdata.news.word2vec.trainer
 
 import com.caishi.bigdata.news.word2vec.utils.HdfsUtils
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.mllib.feature.{Word2Vec, Word2VecModel}
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.{SparkConf, SparkContext}
@@ -65,10 +67,17 @@ object NewsWord2VecTrainning {
       // word2vec 模型
       HdfsUtils.deleteFile(hdfsURL, newsW2VModelPath, true)
       word2vecModel.save(sc, hdfsURL + newsW2VModelPath)
+
       // word2vec 模型 标记
-      val newsW2VModelPathUpdate = newsW2VModelPath+".hasUpdate";
+      val newsW2VModelPathUpdate = newsW2VModelPath+".hasUpdate";// /news/W2V/20170731/News_W2V_Model.hasUpdate
       HdfsUtils.deleteFile(hdfsURL, newsW2VModelPathUpdate, true)
-      word2vecModel.save(sc, hdfsURL + newsW2VModelPathUpdate)
+      val fileConf = new Configuration()
+      fileConf.set("fs.defaultFS", hdfsURL)
+      val fs = FileSystem.get(fileConf)
+      val os = fs.create(new Path(newsW2VModelPathUpdate))
+      os.write(newsW2VModelPathUpdate.getBytes())
+      os.close()
+
       sc.stop()
     } catch {
       case e: Exception => System.exit(-1)
