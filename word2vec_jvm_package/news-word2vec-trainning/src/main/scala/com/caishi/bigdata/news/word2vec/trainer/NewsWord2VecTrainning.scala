@@ -62,8 +62,13 @@ object NewsWord2VecTrainning {
 
     try {
       val word2vecModel = word2vec.fit(tokens)
+      // word2vec 模型
       HdfsUtils.deleteFile(hdfsURL, newsW2VModelPath, true)
       word2vecModel.save(sc, hdfsURL + newsW2VModelPath)
+      // word2vec 模型 标记
+      val newsW2VModelPathUpdate = newsW2VModelPath+".hasUpdate";
+      HdfsUtils.deleteFile(hdfsURL, newsW2VModelPathUpdate, true)
+      word2vecModel.save(sc, hdfsURL + newsW2VModelPathUpdate)
       sc.stop()
     } catch {
       case e: Exception => System.exit(-1)
