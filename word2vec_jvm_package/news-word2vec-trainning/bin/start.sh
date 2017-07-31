@@ -34,5 +34,5 @@ SPARH_HOME=/home/hadoop/caishi/local/spark-1.6.0
     --jars $classpath \
     --properties-file /home/hadoop/apps/spark-NewsWord2Vec/conf/spark.conf \
     /home/hadoop/apps/spark-NewsWord2Vec/news-word2vec-trainning-1.0.jar \
-    hdfs://10.4.1.4:9000 spark-NewsWord2VecTrainning  /news/w2v/sampling/*/part-r-*  /news/W2V/${pt}/News_W2V_Model \
+    hdfs://10.4.1.1:9000 spark-NewsWord2VecTrainning  /news/w2v/sampling/*/part-r-*  /news/W2V/${pt}/News_W2V_Model \
     200 100 5 24 5 >/home/hadoop/apps/spark-NewsWord2Vec/logs/NewsWord2Vec.info 2>&1
